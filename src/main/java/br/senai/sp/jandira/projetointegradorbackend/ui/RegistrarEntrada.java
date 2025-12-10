@@ -1,4 +1,5 @@
 package br.senai.sp.jandira.projetointegradorbackend.ui;
+import br.senai.sp.jandira.projetointegradorbackend.model.Cliente;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -62,15 +63,20 @@ public class RegistrarEntrada extends Application {
         //Criando a Hbox do nome do usuário
         HBox nameUser = new HBox();
         Label nome = new Label("Digite seu Nome: ");
+
         TextField nomeUsuario = new TextField();
 
         HBox modeloVeiculo = new HBox();
         Label veiculo = new Label("Modelo do veículo: ");
+
+
         TextField veiculoCliente = new TextField();
         modeloVeiculo.getChildren().addAll(veiculo,veiculoCliente);
 
         HBox placaDoVeiculo = new HBox();
         Label placa = new Label("Placa do Veículo: ");
+
+
         TextField placaCliente = new TextField();
         placaDoVeiculo.getChildren().addAll(placa, placaCliente);
 
@@ -89,8 +95,6 @@ public class RegistrarEntrada extends Application {
         classeTempo.setStyle("-fx-background-color: red;");
         classeTempo.setAlignment(Pos.CENTER);
         classeTempo.setStyle("-fx-font-size: 15");
-
-
 
 
         //Configurando o layout da Hbox do nome do usuário
@@ -141,8 +145,7 @@ public class RegistrarEntrada extends Application {
         footer.setSpacing(20
         );
 
-
-        confirmar.setOnAction();
+        confirmar.setOnAction(event -> {EntradaDeDados();});
 
         //Botao para fechar o sistema
         Button voltar = new Button("Voltar");
@@ -167,7 +170,7 @@ public class RegistrarEntrada extends Application {
             voltar.setScaleY(1);
         });
 
-
+        
 
         footer.getChildren().addAll(confirmar,voltar);
         root.getChildren().addAll(header, main, footer);
@@ -191,7 +194,13 @@ public class RegistrarEntrada extends Application {
     }
 
 
-    public void entradaDeVeiculos(){
+    public void EntradaDeDados(){
+
+
+        //Receber informações das labels
+
+
+
 
 
 
