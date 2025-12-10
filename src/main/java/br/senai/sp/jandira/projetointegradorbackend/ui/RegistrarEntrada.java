@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.projetointegradorbackend.ui;
-import br.senai.sp.jandira.projetointegradorbackend.model.Cliente;
 
+
+import br.senai.sp.jandira.projetointegradorbackend.model.DadosDoCliente;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -19,6 +20,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class RegistrarEntrada extends Application {
+
+        TextField nomeUser;   //Variavel para guardar o nome do usuario de forma global do arquivo (como os subsequentes)
+        TextField veiculoCliente;
+        TextField placaCliente;
+
+
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -62,22 +69,22 @@ public class RegistrarEntrada extends Application {
         main.setSpacing(10);
         //Criando a Hbox do nome do usuário
         HBox nameUser = new HBox();
-        Label nome = new Label("Digite seu Nome: ");
+        Label labelnome = new Label("Digite seu Nome: ");
 
-        TextField nomeUsuario = new TextField();
+         nomeUser = new TextField();
 
         HBox modeloVeiculo = new HBox();
         Label veiculo = new Label("Modelo do veículo: ");
 
 
-        TextField veiculoCliente = new TextField();
+        veiculoCliente = new TextField();
         modeloVeiculo.getChildren().addAll(veiculo,veiculoCliente);
 
         HBox placaDoVeiculo = new HBox();
         Label placa = new Label("Placa do Veículo: ");
 
 
-        TextField placaCliente = new TextField();
+        placaCliente = new TextField();
         placaDoVeiculo.getChildren().addAll(placa, placaCliente);
 
         HBox classeTempo = new HBox();
@@ -104,7 +111,7 @@ public class RegistrarEntrada extends Application {
         placaDoVeiculo.setStyle("-fx-spacing: 45; -fx-font-size: 20");
 
 
-        nameUser.getChildren().addAll(nome, nomeUsuario);
+        nameUser.getChildren().addAll(labelnome, nomeUser);
 
         main.getChildren().addAll(nameUser, modeloVeiculo, placaDoVeiculo,  classeTempo);
         main.setPadding(new Insets(150 ,400, 200, 400 ));
@@ -170,7 +177,8 @@ public class RegistrarEntrada extends Application {
             voltar.setScaleY(1);
         });
 
-        
+
+        String nomeUsuario = labelnome.getText();
 
         footer.getChildren().addAll(confirmar,voltar);
         root.getChildren().addAll(header, main, footer);
@@ -197,12 +205,17 @@ public class RegistrarEntrada extends Application {
     public void EntradaDeDados(){
 
 
-        //Receber informações das labels
+        DadosDoCliente dadosDoCliente = new DadosDoCliente();
+        dadosDoCliente.dados();
 
+    }
 
+    public void dadosDoCliente(){
 
+        DadosDoCliente dadosDoCliente = new DadosDoCliente();
+        dadosDoCliente.nome = nomeUser.getText();
 
-
+        
 
     }
 }
