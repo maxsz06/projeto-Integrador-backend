@@ -12,6 +12,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class RegistrarEntrada extends Application {
@@ -71,6 +74,25 @@ public class RegistrarEntrada extends Application {
         TextField placaCliente = new TextField();
         placaDoVeiculo.getChildren().addAll(placa, placaCliente);
 
+        HBox classeTempo = new HBox();
+
+    // Pegando o timestamp atual formatado
+        String dataInicial = LocalDateTime.now()
+       .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    // Criando o Label com o timestamp
+        Label horario = new Label(dataInicial);
+    // Adicionando o Label ao HBox
+        classeTempo.getChildren().add(horario);
+
+        //Alterando o estilo do texto
+
+        classeTempo.setStyle("-fx-background-color: red;");
+        classeTempo.setAlignment(Pos.CENTER);
+        classeTempo.setStyle("-fx-font-size: 15");
+
+
+
+
         //Configurando o layout da Hbox do nome do usuário
 
         nameUser.setStyle("-fx-spacing: 40; -fx-font-size: 20");
@@ -80,7 +102,7 @@ public class RegistrarEntrada extends Application {
 
         nameUser.getChildren().addAll(nome, nomeUsuario);
 
-        main.getChildren().addAll(nameUser, modeloVeiculo, placaDoVeiculo);
+        main.getChildren().addAll(nameUser, modeloVeiculo, placaDoVeiculo,  classeTempo);
         main.setPadding(new Insets(150 ,400, 200, 400 ));
         main.setSpacing(30);
 
@@ -120,6 +142,7 @@ public class RegistrarEntrada extends Application {
         );
 
 
+        confirmar.setOnAction();
 
         //Botao para fechar o sistema
         Button voltar = new Button("Voltar");
@@ -165,5 +188,12 @@ public class RegistrarEntrada extends Application {
         if (resposta.isPresent() && resposta.get() == ButtonType.YES){
             Platform.exit();
         }
+    }
+
+
+    public void entradaDeVeiculos(){
+
+
+
     }
 }
