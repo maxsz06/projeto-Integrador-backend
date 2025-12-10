@@ -9,11 +9,6 @@ public class DadosDoCliente {
     public String carro;
     public String id;
 
-
-   public void dados() {
-
-       System.out.println("Teste");
-   }
 }
 
 

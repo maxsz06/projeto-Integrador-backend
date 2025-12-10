@@ -1,7 +1,7 @@
 package br.senai.sp.jandira.projetointegradorbackend.ui;
-
-
 import br.senai.sp.jandira.projetointegradorbackend.model.DadosDoCliente;
+
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -18,6 +18,7 @@ import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.UUID;
 
 public class RegistrarEntrada extends Application {
 
@@ -152,7 +153,6 @@ public class RegistrarEntrada extends Application {
         footer.setSpacing(20
         );
 
-        confirmar.setOnAction(event -> {EntradaDeDados();});
 
         //Botao para fechar o sistema
         Button voltar = new Button("Voltar");
@@ -202,20 +202,18 @@ public class RegistrarEntrada extends Application {
     }
 
 
-    public void EntradaDeDados(){
-
-
-        DadosDoCliente dadosDoCliente = new DadosDoCliente();
-        dadosDoCliente.dados();
-
-    }
-
     public void dadosDoCliente(){
 
         DadosDoCliente dadosDoCliente = new DadosDoCliente();
         dadosDoCliente.nome = nomeUser.getText();
+        dadosDoCliente.placa = placaCliente.getText();
+        dadosDoCliente.carro = veiculoCliente.getText();
 
-        
+        UUID uuid = UUID.randomUUID();
+        dadosDoCliente.id = uuid.toString();
 
     }
+
+
+
 }
