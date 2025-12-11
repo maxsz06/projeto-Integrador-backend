@@ -2,6 +2,7 @@ package br.senai.sp.jandira.projetointegradorbackend.ui;
 import br.senai.sp.jandira.projetointegradorbackend.model.DadosDoCliente;
 
 
+import br.senai.sp.jandira.projetointegradorbackend.repository.ClienteRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -25,6 +26,9 @@ public class RegistrarEntrada extends Application {
         TextField nomeUser;   //Variavel para guardar o nome do usuario de forma global do arquivo (como os subsequentes)
         TextField veiculoCliente;
         TextField placaCliente;
+        public String nome;
+        public String placa;
+        public String carro;
 
 
     @Override
@@ -92,7 +96,7 @@ public class RegistrarEntrada extends Application {
 
     // Pegando o timestamp atual formatado
         String dataInicial = LocalDateTime.now()
-       .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+       .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     // Criando o Label com o timestamp
         Label horario = new Label(dataInicial);
     // Adicionando o Label ao HBox
@@ -128,6 +132,8 @@ public class RegistrarEntrada extends Application {
 
         //Botao para fechar o sistema
         Button confirmar = new Button("Confirmar");
+
+        confirmar.setOnAction(actionEvent -> registrarEntrada());
 
         //Configurando o botao confirmar
         confirmar.setPrefWidth(200);
@@ -198,22 +204,36 @@ public class RegistrarEntrada extends Application {
         Optional<ButtonType> resposta = alertaFechar.showAndWait();
         if (resposta.isPresent() && resposta.get() == ButtonType.YES){
             Platform.exit();
+
+
+
         }
     }
 
+    public void registrarEntrada() {
 
-    public void dadosDoCliente(){
+            placa = placaCliente.getText();
+            carro = veiculoCliente.getText();
+            nome   = nomeUser.getText();
 
-        DadosDoCliente dadosDoCliente = new DadosDoCliente();
-        dadosDoCliente.nome = nomeUser.getText();
-        dadosDoCliente.placa = placaCliente.getText();
-        dadosDoCliente.carro = veiculoCliente.getText();
 
-        UUID uuid = UUID.randomUUID();
-        dadosDoCliente.id = uuid.toString();
+            if (placa.isEmpty() || carro.isEmpty() || nome.isEmpty()) {
+                placaCliente.setPromptText("Insira a Placa");
+                veiculoCliente.setPromptText("Insira o Veículo");
+                nomeUser.setPromptText("Insira o nome ");
+                return;
+            }
 
+            ClienteRepository clienteRepository = new ClienteRepository();
+            clienteRepository.gravarDados();
     }
-
-
-
 }
+
+
+
+
+
+
+
+
+
