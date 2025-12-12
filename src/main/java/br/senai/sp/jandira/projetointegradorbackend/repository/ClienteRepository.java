@@ -35,7 +35,7 @@ public class ClienteRepository {
        try{
 
 
-           Files.writeString(arquivo, cliente.nome+ ";" + cliente.placa + ";" + cliente.carro, horaAtual StandardOpenOption.APPEND);
+           Files.writeString(arquivo, cliente.nome+ ";" + cliente.placa + ";" + cliente.carro, horaEntrada StandardOpenOption.APPEND);
        }catch (IOException e){
 
            System.out.println("Erro ao criar o arquivo");
