@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -27,15 +28,16 @@ public class ClienteRepository {
 
     public void gravarCliente(Cliente cliente) {
 
-        LocalDateTime horaAtual = LocalDateTime.now();
-        DateTimeFormatter formator = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String horaEntrada = horaAtual.format(formator);
+    LocalDateTime entrada = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    String dataHora = entrada.format(formatter);
+
 
        Path arquivo= Paths.get("/Users/25203648/Arquivos/projetointegrador.csv");
        try{
 
 
-           Files.writeString(arquivo, cliente.nome+ ";" + cliente.placa + ";" + cliente.carro, horaEntrada StandardOpenOption.APPEND);
+           Files.writeString(arquivo, cliente.nome+ ";" + cliente.placa + ";" + cliente.carro + ";" + dataHora + "\n", StandardOpenOption.APPEND);
        }catch (IOException e){
 
            System.out.println("Erro ao criar o arquivo");

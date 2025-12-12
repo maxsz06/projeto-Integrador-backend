@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,15 +27,16 @@ import java.util.UUID;
 
 public class RegistrarEntrada extends Application {
 
+    Path arquivo = Paths.get("/Users/25203648/Arquivos/projetointegrador.csv");
     ClienteRepository clienteRepository;
     Cliente cliente;
 
-        TextField nomeUser;   //Variavel para guardar o nome do usuario de forma global do arquivo (como os subsequentes)
-        TextField veiculoCliente;
-        TextField placaCliente;
-        public String nome;
-        public String placa;
-        public String carro;
+    TextField nomeUser;   //Variavel para guardar o nome do usuario de forma global do arquivo (como os subsequentes)
+    TextField veiculoCliente;
+    TextField placaCliente;
+    public String nome;
+    public String placa;
+    public String carro;
 
 
     @Override
@@ -85,18 +88,17 @@ public class RegistrarEntrada extends Application {
         HBox nameUser = new HBox();
         Label labelnome = new Label("Digite seu Nome: ");
 
-         nomeUser = new TextField();
+        nomeUser = new TextField();
 
         HBox modeloVeiculo = new HBox();
         Label veiculo = new Label("Modelo do veículo: ");
 
 
         veiculoCliente = new TextField();
-        modeloVeiculo.getChildren().addAll(veiculo,veiculoCliente);
+        modeloVeiculo.getChildren().addAll(veiculo, veiculoCliente);
 
         HBox placaDoVeiculo = new HBox();
         Label placa = new Label("Placa do Veículo: ");
-
 
 
         placaCliente = new TextField();
@@ -104,12 +106,12 @@ public class RegistrarEntrada extends Application {
 
         HBox classeTempo = new HBox();
 
-    // Pegando o timestamp atual formatado
+        // Pegando o timestamp atual formatado
         String dataInicial = LocalDateTime.now()
-       .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-    // Criando o Label com o timestamp
+                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        // Criando o Label com o timestamp
         Label horario = new Label(dataInicial);
-    // Adicionando o Label ao HBox
+        // Adicionando o Label ao HBox
         classeTempo.getChildren().add(horario);
 
         //Alterando o estilo do texto
@@ -128,15 +130,15 @@ public class RegistrarEntrada extends Application {
 
         nameUser.getChildren().addAll(labelnome, nomeUser);
 
-        main.getChildren().addAll(nameUser, modeloVeiculo, placaDoVeiculo,  classeTempo);
-        main.setPadding(new Insets(150 ,400, 200, 400 ));
+        main.getChildren().addAll(nameUser, modeloVeiculo, placaDoVeiculo, classeTempo);
+        main.setPadding(new Insets(150, 400, 200, 400));
         main.setSpacing(30);
 
 
         // FOOTER
 
-        HBox footer= new HBox();
-       // footer.setStyle("-fx-background-color: #ffffff");
+        HBox footer = new HBox();
+        // footer.setStyle("-fx-background-color: #ffffff");
         footer.setPrefHeight(300);
         footer.setPrefWidth(200);
 
@@ -196,7 +198,7 @@ public class RegistrarEntrada extends Application {
 
         String nomeUsuario = labelnome.getText();
 
-        footer.getChildren().addAll(confirmar,voltar);
+        footer.getChildren().addAll(confirmar, voltar);
         root.getChildren().addAll(header, main, footer);
 
         stage.setTitle("Estacionamento");
@@ -205,16 +207,15 @@ public class RegistrarEntrada extends Application {
     }
 
     //Configurando funções dos botões
-    public void fechar(){
+    public void fechar() {
         Alert alertaFechar = new Alert(
                 Alert.AlertType.CONFIRMATION, "Tem certeza que deseja voltar?",
                 ButtonType.YES,
                 ButtonType.NO
         );
         Optional<ButtonType> resposta = alertaFechar.showAndWait();
-        if (resposta.isPresent() && resposta.get() == ButtonType.YES){
+        if (resposta.isPresent() && resposta.get() == ButtonType.YES) {
             Platform.exit();
-
 
 
         }
@@ -223,22 +224,16 @@ public class RegistrarEntrada extends Application {
     public void registrarEntrada() {
 
 
+        cliente.carro = veiculoCliente.getText();
+        cliente.nome = nomeUser.getText();
+        cliente.placa = placaCliente.getText();
+        clienteRepository.gravarCliente(cliente);
 
-
-
-                cliente.carro = veiculoCliente.getText();
-                cliente.nome = nomeUser.getText();
-                cliente.placa = placaCliente.getText();
-
-
-
-       clienteRepository.gravarCliente(cliente);
 
     }
+
+
 }
-
-
-
 
 
 
