@@ -1,5 +1,5 @@
 package br.senai.sp.jandira.projetointegradorbackend.ui;
-import br.senai.sp.jandira.projetointegradorbackend.model.DadosDoCliente;
+import br.senai.sp.jandira.projetointegradorbackend.model.Cliente;
 
 
 import br.senai.sp.jandira.projetointegradorbackend.repository.ClienteRepository;
@@ -21,7 +21,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
+
+
 public class RegistrarEntrada extends Application {
+
+    ClienteRepository clienteRepository;
+    Cliente cliente;
 
         TextField nomeUser;   //Variavel para guardar o nome do usuario de forma global do arquivo (como os subsequentes)
         TextField veiculoCliente;
@@ -33,6 +38,10 @@ public class RegistrarEntrada extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        clienteRepository = new ClienteRepository();
+        cliente = new Cliente();
+
 
         VBox root = new VBox();              //Criando o Vbox (Alinhamento dos itens na vertical)
         Scene scene = new Scene(root);       //Criando a cena que recebe como parametro o root
@@ -87,6 +96,7 @@ public class RegistrarEntrada extends Application {
 
         HBox placaDoVeiculo = new HBox();
         Label placa = new Label("Placa do Veículo: ");
+
 
 
         placaCliente = new TextField();
@@ -212,20 +222,18 @@ public class RegistrarEntrada extends Application {
 
     public void registrarEntrada() {
 
-            placa = placaCliente.getText();
-            carro = veiculoCliente.getText();
-            nome   = nomeUser.getText();
 
 
-            if (placa.isEmpty() || carro.isEmpty() || nome.isEmpty()) {
-                placaCliente.setPromptText("Insira a Placa");
-                veiculoCliente.setPromptText("Insira o Veículo");
-                nomeUser.setPromptText("Insira o nome ");
-                return;
-            }
 
-            ClienteRepository clienteRepository = new ClienteRepository();
-            clienteRepository.gravarDados();
+
+                cliente.carro = veiculoCliente.getText();
+                cliente.nome = nomeUser.getText();
+                cliente.placa = placaCliente.getText();
+
+
+
+       clienteRepository.gravarCliente(cliente);
+
     }
 }
 
