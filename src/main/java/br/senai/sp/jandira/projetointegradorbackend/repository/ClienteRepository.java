@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -48,20 +51,51 @@ public class ClienteRepository {
     }
 
 
-    public void receberDados (TextField nomeUser, TextField placaCliente, TextField veiculoCliente) {
-
-        RegistrarEntrada registrarEntrada =  new RegistrarEntrada();
-        Cliente cliente = new Cliente();
-
-        cliente.nome = nomeUser.getText();
-        cliente.placa = placaCliente.getText();
-        cliente.carro = veiculoCliente.getText();
 
 
-        gravarCliente(cliente);
+    public boolean placaJaExiste(String placa) {
+
+
+        System.out.println("Validando Placa");
+
+        File arquivo = new File("clientes.csv");
+
+        if (!arquivo.exists()) {
+            return false;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+
+            String linha;
+            boolean primeiraLinha = true;
+
+            while ((linha = br.readLine()) != null) {
+
+                // pula cabeçalho
+                if (primeiraLinha) {
+                    primeiraLinha = false;
+                    if (linha.toLowerCase().contains("placa")) {
+                        continue;
+                    }
+                }
+
+                String[] dados = linha.split(",");
+
+                if (dados.length < 3) continue;
+
+                String placaCSV = dados[2].trim().toUpperCase();
+
+                if (placaCSV.equals(placa.trim().toUpperCase())) {
+                    return true; // ACHOU placa duplicada
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro ao ler CSV");
+        }
+
+        return false;
     }
-
-
 
 }
 

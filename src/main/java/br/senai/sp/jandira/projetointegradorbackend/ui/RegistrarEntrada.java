@@ -14,15 +14,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.UUID;
-
 
 
 public class RegistrarEntrada extends Application {
@@ -223,17 +220,46 @@ public class RegistrarEntrada extends Application {
 
     public void registrarEntrada() {
 
+    String placa= placaCliente.getText().trim().toUpperCase();
+
+    //Campo vazio
+
+        if (placa.isEmpty()){
+
+            System.out.println("Placa Obrigatoria");
+            return;
+
+        }
+
+        //Formato da Placa
+
+        boolean placaAntiga = placa.matches("[A-Z]{3}[0-9]{4}");
+        boolean placaMercosul = placa.matches("[A-Z]{3}[0-9][A-Z][0-9]{2}");
+
+        if (!placaAntiga && !placaMercosul) {
+            System.out.println("Placa Invalida");
+            return;
+        }
+
+        if (clienteRepository.placaJaExiste(placa)) {
+
+            System.out.println("Placa Ja Existe");
+            return;
+
+        }
+
+        // Gravar dados
 
         cliente.carro = veiculoCliente.getText();
         cliente.nome = nomeUser.getText();
         cliente.placa = placaCliente.getText();
+
         clienteRepository.gravarCliente(cliente);
 
+        System.out.println("Cliente carregado com sucesso");
 
+        }
     }
-
-
-}
 
 
 
